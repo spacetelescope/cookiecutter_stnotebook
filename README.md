@@ -1,7 +1,16 @@
 # cookiecutter_stnotebook
 This repo is a cookiecutter project for generating a new Jupyter notebook template for the Space Telescope Science Institute (STScI) [notebooks]((https://github.com/spacetelescope/notebooks)) repository.
 
-## Prerequities
+- [cookiecutter_stnotebook](#cookiecutter_stnotebook)
+  - [Prerequisites](#prerequisites)
+  - [Creating a new template notebook](#creating-a-new-template-notebook)
+  - [Cookiecutter Prompts](#cookiecutter-prompts)
+    - [Template Output](#template-output)
+    - [Example](#example)
+  - [Replaying a Project](#replaying-a-project)
+  - [Custom User Default Prompts](#custom-user-default-prompts)
+
+## Prerequisites
 
 Before you can create a new notebook template, you must meet the following prereqs:
 
