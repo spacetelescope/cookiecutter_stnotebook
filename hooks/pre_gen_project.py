@@ -26,8 +26,6 @@ try:
 except ImportError as e:
     raise ImportError('cannot import invoke. Did you run \'pip install invoke\'?') from e
 
-print('first current dir', current_dir)
-print('repo_path', repo_path)
 
 @invoke.task
 def branchgit(ctx):
@@ -68,8 +66,6 @@ def clonegit(ctx):
 
     os.chdir(clonedir)
     print(f'Cloning git repo: {repo_name}')
-    print('current dir', current_dir)
-    print('clone dir', clonedir)
 
     try:
         ctx.run(f"git clone http://github.com/{git_user}/{repo_name} --depth=1")
@@ -82,9 +78,6 @@ def clonegit(ctx):
 def updategit(ctx):
     """ Update an existing notebooks git repo """
 
-    print('current dir', current_dir)
-    ctx.run('ls')
-
     if not repo_dir.exists():
         raise Exit(f'The repo directory {repo_dir} does not exist.  Check you are in the correct directory.')
 
@@ -93,8 +86,6 @@ def updategit(ctx):
     ctx.run("git fetch")
     ctx.run("git pull")
 
-    print('current dir', os.path.abspath(os.curdir))
-    ctx.run('ls')
 
 @invoke.task
 def createconda(ctx):
@@ -124,14 +115,4 @@ create_conda = '{{ cookiecutter.create_conda }}'
 if create_conda in {'yes', 'y'}:
     ex.execute('createconda')
 
-
-# Options
-# 1 - no repo - install in current dirctory - WORKS
-# 2 - no repo - install in specific directory - WORKS
-# 3 - yes repo - in repo directory - WORKS
-# 3 - yes repo - in repo directory but not really - WORKS
-# 4 - yes repo - not in repo directory - WORKS
-# 5 - copy notebook content over
-# 6 - clean up orig notebook content
-# 7 - clean up parent temp directory
 
