@@ -25,20 +25,15 @@ pip install -U invoke cookiecutter
 ## Creating a new template notebook
 
 1. In a new shell terminal, run
-
 ```
 cookiecutter https://github.com/havok2063/cookiecutter_stnotebook
 ```
-
 2. Follow the on-screen terminal prompts. See [Cookiecutter Prompts](#cookiecutter-prompts) for details.
-
 3. Once completed, you will a have new template notebook which you can further customize.  You will also have a new active git branch in the `notebooks` repo. See the [Example](#example) below.
-
 4. If you created a conda environment during project generation, or have an existing one, activate it with
 ```
 conda activate notebooks_env
 ```
-
 5. Navigate to your new notebook directory and run
 ```
 jupyter notebook
