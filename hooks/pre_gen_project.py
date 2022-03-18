@@ -5,6 +5,7 @@
 #
 from __future__ import print_function, division, absolute_import
 import os
+import re
 import pathlib
 
 #
@@ -13,7 +14,8 @@ import pathlib
 current_dir = pathlib.Path().resolve()
 git_user = '{{ cookiecutter.github_username }}'
 repo_name = '{{ cookiecutter._repo_name }}'
-branch_name = ' {{ cookiecutter.branch_name }}'
+branch_name = '{{ cookiecutter.branch_name }}'.lower().replace(' ', '_')
+branch_name = f"nb_{branch_name}"
 repo_path = pathlib.Path('{{ cookiecutter.repo_path }}').expanduser().resolve()
 clonedir = repo_path.parent if repo_path == current_dir else repo_path
 repo_dir = clonedir / repo_name
@@ -104,6 +106,11 @@ def createconda(ctx):
 
 col = invoke.Collection(clonegit, updategit, createconda)
 ex = invoke.executor.Executor(col)
+
+# validate the notebook_name
+nb_name = '{{ cookiecutter.notebook_name }}'
+if not re.match("^[A-Za-z_]*$", nb_name):
+    raise ValueError(f'Invalid notebook_name: {nb_name}.  It can only consist of letters and underscores.')
 
 repo_exists = '{{ cookiecutter.repo_exists_locally }}'
 if repo_exists in {'yes', 'y'}:

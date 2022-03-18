@@ -7,9 +7,9 @@
     "repo_exists_locally": ["no", "yes"],
     "repo_path": ".",
     "create_conda": ["no", "yes"],
-    "branch_name": "nb_notebook",
+    "branch_name": "mynotebook",
     "category": "MAST",
     "mission": "JWST",
-    "notebook_name": "new_notebook",
+    "notebook_name": "{{ cookiecutter.branch_name }}",
     "short_description": "A basic notebook template"
 }
