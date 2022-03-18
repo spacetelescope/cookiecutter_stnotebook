@@ -115,6 +115,7 @@ jupyter notebook
 ```
 We should see a new `nb_beginner_spectralfit.ipynb` template notebook, that looks like the following.
 
+![Example Notebook](https://raw.githubusercontent.com/havok2063/cookiecutter_stnotebook/14fe469e1b63db46ffc129e550f5e3ec9c41de3e/example/template_notebook.png)
 
 ## Replaying a Project
 
