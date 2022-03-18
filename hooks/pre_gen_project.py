@@ -70,7 +70,7 @@ def clonegit(ctx):
     print(f'Cloning git repo: {repo_name}')
 
     try:
-        ctx.run(f"git clone http://github.com/{git_user}/{repo_name} --depth=1")
+        ctx.run(f"git clone http://github.com/{git_user}/{repo_name}")
     except UnexpectedExit as e:
         print('Unexpected failure during git clone:\n {0}'.format(e.result.stderr))
     os.chdir(repo_name)
