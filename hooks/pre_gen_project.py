@@ -6,27 +6,28 @@
 from __future__ import print_function, division, absolute_import
 import os
 import pathlib
-from turtle import st
 
 #
 # This script runs before the cookiecutter template has been installed
 #
-current_dir = os.path.abspath(os.curdir)
+current_dir = pathlib.Path().resolve()
 git_user = '{{ cookiecutter.github_username }}'
 repo_name = '{{ cookiecutter._repo_name }}'
 branch_name = ' {{ cookiecutter.branch_name }}'
-repo_path = '{{ cookiecutter.repo_path }}'
-path = pathlib.Path(repo_path).expanduser().resolve()
+repo_path = pathlib.Path('{{ cookiecutter.repo_path }}').expanduser().resolve()
+clonedir = repo_path.parent if repo_path == current_dir else repo_path
+repo_dir = clonedir / repo_name
 
 # Checks that invoke is installed.
 
 try:
     import invoke
-    from invoke.exceptions import UnexpectedExit
+    from invoke.exceptions import UnexpectedExit, Exit
 except ImportError as e:
     raise ImportError('cannot import invoke. Did you run \'pip install invoke\'?') from e
 
-
+print('first current dir', current_dir)
+print('repo_path', repo_path)
 
 @invoke.task
 def branchgit(ctx):
@@ -65,24 +66,35 @@ def addremote(ctx):
 def clonegit(ctx):
     """ Clones the notebooks git repo """
 
-    os.chdir(current_dir)
+    os.chdir(clonedir)
     print(f'Cloning git repo: {repo_name}')
+    print('current dir', current_dir)
+    print('clone dir', clonedir)
+
     try:
-        ctx.run(f"git clone http://github.com/{git_user}/{repo_name} --depth=1 stnotebooks")
+        ctx.run(f"git clone http://github.com/{git_user}/{repo_name} --depth=1")
     except UnexpectedExit as e:
         print('Unexpected failure during git clone:\n {0}'.format(e.result.stderr))
-    os.chdir("stnotebooks")
+    os.chdir(repo_name)
 
 
 @invoke.task(post=[branchgit])
 def updategit(ctx):
     """ Update an existing notebooks git repo """
 
-    with ctx.cd(path.expanduser().resolve()):
-        ctx.run("git checkout master")
-        ctx.run("git fetch")
-        ctx.run("git pull")
+    print('current dir', current_dir)
+    ctx.run('ls')
 
+    if not repo_dir.exists():
+        raise Exit(f'The repo directory {repo_dir} does not exist.  Check you are in the correct directory.')
+
+    os.chdir(repo_dir)
+    ctx.run("git checkout master")
+    ctx.run("git fetch")
+    ctx.run("git pull")
+
+    print('current dir', os.path.abspath(os.curdir))
+    ctx.run('ls')
 
 @invoke.task
 def createconda(ctx):
@@ -95,7 +107,8 @@ def createconda(ctx):
     has_env = "notebooks_env" in res.stdout
     if not has_env:
         print('Creating conda environment')
-        ctx.run("conda env create -f environment.yml")
+        with ctx.cd(repo_dir):
+            ctx.run("conda env create -f environment.yml")
 
 
 col = invoke.Collection(clonegit, updategit, createconda)
@@ -112,4 +125,13 @@ if create_conda in {'yes', 'y'}:
     ex.execute('createconda')
 
 
+# Options
+# 1 - no repo - install in current dirctory - WORKS
+# 2 - no repo - install in specific directory - WORKS
+# 3 - yes repo - in repo directory - WORKS
+# 3 - yes repo - in repo directory but not really - WORKS
+# 4 - yes repo - not in repo directory - WORKS
+# 5 - copy notebook content over
+# 6 - clean up orig notebook content
+# 7 - clean up parent temp directory
 
