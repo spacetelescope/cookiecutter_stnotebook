@@ -45,7 +45,6 @@ jupyter notebook
 When creating a new notebook project, it asks a series of input prompts (`prompt[default_value]`) to be used during template generation.  It prompts for the following inputs:
 
 - **full_name**: Your full name
-- **email**: Your professional email
 - **github_username**: Your Github username
 - **repo_exists_locally**: Whether or not the `notebooks` repo is already checked out locally
 - **repo_path**: The top level directory where the repository is to be checked out, or is currently located
@@ -72,7 +71,6 @@ cd  # start from home dir and run cookiecutter
 cookiecutter https://github.com/havok2063/cookiecutter_stnotebook
 
 full_name [John Doe]: Brian Cherinka
-email [myemail@here.com]: bcherinka@stsci.edu
 github_username [gituser]: havok2063
 Select repo_exists_locally:
 1 - no
@@ -134,7 +132,6 @@ To customize the default prompt inputs, you can create a user config file in you
 ```
 default_context:
     full_name: "Brian Cherinka"
-    email: "bcherinka@stsci.edu"
     github_username: "havok2063"
     repo_exists_locally: "yes"
     repo_path: "~/Work/git/havok2063"
