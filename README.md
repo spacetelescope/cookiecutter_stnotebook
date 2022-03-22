@@ -26,7 +26,7 @@ pip install -U invoke cookiecutter
 
 1. In a new shell terminal, run
 ```
-cookiecutter https://github.com/havok2063/cookiecutter_stnotebook
+cookiecutter https://github.com/spacetelescope/cookiecutter_stnotebook
 ```
 2. Follow the on-screen terminal prompts. See [Cookiecutter Prompts](#cookiecutter-prompts) for details.
 3. Once completed, you will a have new template notebook which you can further customize.  You will also have a new active git branch in the `notebooks` repo. See the [Example](#example) below.
@@ -68,7 +68,7 @@ Let's run through an example of creating a new notebook of spectral line fitting
 Starting from our home directory, we run the cookiecutter command and follow the on-screen prompt, seen below:
 ```bash
 cd  # start from home dir and run cookiecutter
-cookiecutter https://github.com/havok2063/cookiecutter_stnotebook
+cookiecutter https://github.com/spacetelescope/cookiecutter_stnotebook
 
 full_name [John Doe]: Brian Cherinka
 github_username [gituser]: havok2063
@@ -117,13 +117,13 @@ jupyter notebook
 ```
 We should see a new `nb_beginner_spectralfit.ipynb` template notebook, that looks like the following:
 
-![Example Notebook](https://raw.githubusercontent.com/havok2063/cookiecutter_stnotebook/14fe469e1b63db46ffc129e550f5e3ec9c41de3e/example/template_notebook.png)
+![Example Notebook](https://raw.githubusercontent.com/spacetelescope/cookiecutter_stnotebook/14fe469e1b63db46ffc129e550f5e3ec9c41de3e/example/template_notebook.png)
 
 ## Replaying a Project
 
 When cookiecutter runs, it saves your prompt inputs to easily replay the project at a later time.  To reuse your previous inputs, specify the `replay` argument:
 ```
-cookiecutter --replay https://github.com/havok2063/cookiecutter_stnotebook
+cookiecutter --replay https://github.com/spacetelescope/cookiecutter_stnotebook
 ```
 
 ## Custom User Default Prompts
